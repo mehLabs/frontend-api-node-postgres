@@ -153,7 +153,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <h1>
-          CRUD hecho con express.js y PostgreSQL
+          CRUD de PostgreSQL construido en React.js y Express.js
         </h1>
       </header>
       <Container>
@@ -167,8 +167,12 @@ function App() {
           }
         </div>
       </Container>
-      <footer className='bg-dark d-flex align-items-center p-4'>
-          <h4 className='text-white'>Hugo Iturrieta's work. v0.1</h4>
+      <footer className='bg-dark d-flex align-items-center p-4 flex-wrap'>
+          <h5 className='text-white w-100'>Hugo Iturrieta's work. v0.2</h5> 
+          
+          <p>
+            <small className='text-white text-decoration-none'>Visit my portfolio: <a className='text-white' href='https://hugoitu.com.ar'>https://hugoitu.com.ar</a></small>
+          </p>
       </footer>
     </div>
   );
