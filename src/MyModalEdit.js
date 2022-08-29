@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import {Modal, ModalHeader, Button, FormGroup, ModalFooter, ModalBody} from 'reactstrap';
 
+
 function MyModalEdit(props){
+  const url = "http://localhost:7000/usuarios";
   const [form,setForm] = useState({
-    id: props.id,
-    name: "",
-    email: "",
-    password: ""
+    id: props.form.id,
+    name: props.form.name,
+    email: props.form.email,
+    password: props.form.password
   })
 
   const handleChange = (e) => {
@@ -16,8 +18,25 @@ function MyModalEdit(props){
     })
   }  
 
-  const editar = () => {
-    props.handleChange(form);
+  const editar = async () => {
+    try {
+      let config = {
+        method: 'PUT',
+        headers: {
+          'Accept':'application/json',
+          'Content-Type':'application/json'
+        },
+        body: JSON.stringify(form)
+      }
+
+      const response = await fetch(url+"/"+form.id,config);
+      console.log(response);
+      
+      props.handleChange(form);
+      cerrarModalActualizar();
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   const cerrarModalActualizar = () => {
@@ -54,7 +73,7 @@ function MyModalEdit(props){
               name="name"
               type="text"
               onChange={handleChange}
-              value={props.form.name}
+              value={form.name}
           />
           </FormGroup>
           
@@ -67,7 +86,7 @@ function MyModalEdit(props){
               name="email"
               type="text"
               onChange={handleChange}
-              value={props.form.email}
+              value={form.email}
           />
           </FormGroup>
 

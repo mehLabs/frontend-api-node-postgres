@@ -10,6 +10,10 @@ function Tabla(props) {
   const handleDelete = (rowId) => {
     props.handleDelete(rowId);
   }
+
+  const handleEdit = (object) => {
+    props.handleEdit(object);
+  }
   
 
   return (<table className="table table-striped">
@@ -24,7 +28,7 @@ function Tabla(props) {
             <tbody>
               {
                 props.usuarios?.map( (usuario,index) => {
-                  return <Fila handleDelete={handleDelete} key={index.toString()} name={usuario.name} email={usuario.email} userId={usuario.id} id={index} />
+                  return <Fila handleEdit={handleEdit} handleDelete={handleDelete} key={index.toString()} name={usuario.name} email={usuario.email} userId={usuario.id} id={index} />
                 })
               }
             </tbody>
@@ -39,11 +43,12 @@ function Fila(props){
   const [user,setUser] = useState({
     id: props.userId,
     name: props.name,
-    email: props.email
+    email: props.email,
+    password: "",
   })
 
   const handleChange = (e) => {
-    console.log(e);
+    props.handleEdit(e);
   }
 
   const deleteRow = async (rowId) => {
@@ -128,6 +133,22 @@ function App() {
     }
   }
 
+  const handleEdit = (editedUser) => {
+    if(usuarios){
+      let users = usuarios;
+  
+      for (let i = 0; i < users.length; i++) {
+        if(editedUser.id === users[i].id){
+          console.log("editado usuario "+users[i].id)
+          users[i] = editedUser;
+          break;
+        }
+      }
+      updateUsuarios(users);
+    }
+    
+  }
+
   return (
     <div className="App">
       <header className="App-header">
@@ -142,7 +163,7 @@ function App() {
           }
           
           { !usuarios ? 'Cargando...' : 
-              <Tabla handleDelete={deleteRow} usuarios={usuarios} />
+              <Tabla handleEdit={handleEdit} handleDelete={deleteRow} usuarios={usuarios} />
           }
         </div>
       </Container>
